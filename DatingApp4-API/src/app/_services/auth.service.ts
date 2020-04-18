@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { AlertifyService } from './alertify.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +8,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'http://localhost:5000/api/auth/';
+  baseUrl = environment.apiUrl + 'auth/';
   jwtHelper = new JwtHelperService();
   tokenDecoded :any;
   constructor(private http: HttpClient,private alertify :AlertifyService) { }
