@@ -35,7 +35,7 @@ namespace DatingApp.API.Controllers {
             if (await _repo.UserExists (UserToRegisterDto.Username))
                 return BadRequest ("Username already exists ");
 
-            var userToCreat = new User { userName = UserToRegisterDto.Username };
+            var userToCreat = new User{ Username = UserToRegisterDto.Username };
 
             var createdUser = await _repo.Rigister (userToCreat, UserToRegisterDto.Password);
 
@@ -55,7 +55,7 @@ namespace DatingApp.API.Controllers {
             //create claims from IdUser And NameUser 
             var claims = new [] {
                 new Claim (ClaimTypes.NameIdentifier, userForRepo.Id.ToString ()),
-                new Claim (ClaimTypes.Name, userForRepo.userName)
+                new Claim (ClaimTypes.Name, userForRepo.Username)
             };
 
             //Generate Key For create credencials 
