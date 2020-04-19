@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 // import { MembersComponent } from './members/members.component';
-import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { UsersService } from './_services/users.service';
@@ -27,6 +26,7 @@ import { MemberListComponent } from './member-list/member-list.component';
 import { MemberCardComponent } from './member-list/member-card/member-card.component';
 import { MerberDetailsResolver } from './_reslover/merber-details-resolver';
 import { MerberListsResolver } from './_reslover/merber-lists-resolver';
+import { ListsComponent } from './lists/lists.component';
 
 export function tokenGetter(){
 return localStorage.getItem('token');
@@ -38,12 +38,11 @@ return localStorage.getItem('token');
       NavbarComponent,
       HomeComponent,
       RegisterComponent,
-      ListsComponent,
       MessagesComponent,
       MemberListComponent,
       MemberCardComponent,
-      MemberDetailComponent
-
+      MemberDetailComponent,
+      ListsComponent
    ],
    imports: [
       BrowserModule,
@@ -53,7 +52,7 @@ return localStorage.getItem('token');
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
-      NgxGalleryModule ,
+      NgxGalleryModule,
       JwtModule.forRoot({
         config:{
           tokenGetter : tokenGetter,
