@@ -35,6 +35,7 @@ export class MemberEditComponent implements OnInit {
       .subscribe(data => {
         this.editForm.reset(this.useredit);
         this.alertify.success("updated is Successfly");
+        console.log(this.useredit);
       }, error => {
         this.alertify.error(error);
       }
