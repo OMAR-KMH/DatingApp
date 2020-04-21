@@ -23,7 +23,7 @@ export class UsersService {
   }
 
 
-
+//update
   updateUser(id: number, user: User) {
    return this.http.put(this.apiUrl + 'users/' + id, user)
   }
