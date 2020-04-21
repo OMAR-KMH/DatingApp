@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
@@ -15,6 +17,7 @@ namespace DatingApp.API.Controllers {
         private readonly IMapper _mapper;
 
         public UsersController (IDatingRepository repo, IMapper mapper) {
+
             _mapper = mapper;
             _repo = repo;
         }
@@ -36,5 +39,37 @@ namespace DatingApp.API.Controllers {
             return Ok (userToReturn);
         }
 
+        [HttpPut ("{id}")]
+
+        public async Task<IActionResult> UpdateUser (int id, [FromBody] UserForUpdate userForUpdate) {
+
+            if (id != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
+                return Unauthorized ();
+
+            var userFromRepo = await _repo.GetUser (id);
+            _mapper.Map<UserForUpdate, User> (userForUpdate, userFromRepo);
+
+            if (await _repo.SaveAll ())
+                return NoContent ();
+
+            throw new Exception ($"Updating user {id} Falied on Saved");
+
+            // [HttpPut ("{id}")]
+            // public async Task<IActionResult> UpdateUser (int id, UserForUpdateDto userForUpdate) {
+
+            //     if (id != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value)) {
+            //         return Unauthorized ();
+            //     }
+
+            //     var userFromRepo = await _repo.GetUser (id);
+            //      var user=_mapper.Map(userForUpdate,userFromRepo);
+
+            //     if (await _repo.SaveAll ())
+            //         return NoContent ();
+
+            //     //throw new Exception ($"Updating user {id} Falied on Saved");
+            //     return Ok(userFromRepo);
+            // }
+        }
     }
 }

@@ -27,6 +27,9 @@ import { MemberCardComponent } from './member-list/member-card/member-card.compo
 import { MerberDetailsResolver } from './_reslover/merber-details-resolver';
 import { MerberListsResolver } from './_reslover/merber-lists-resolver';
 import { ListsComponent } from './lists/lists.component';
+import { MemberEditComponent } from './member-list/member-edit/member-edit.component';
+import { MerberEditResolver } from './_reslover/merber-edit-resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 export function tokenGetter(){
 return localStorage.getItem('token');
@@ -42,7 +45,8 @@ return localStorage.getItem('token');
       MemberListComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      ListsComponent
+      ListsComponent,
+      MemberEditComponent
    ],
    imports: [
       BrowserModule,
@@ -69,7 +73,9 @@ return localStorage.getItem('token');
       AuthGuard,
       UsersService,
       MerberDetailsResolver,
-      MerberListsResolver
+      MerberListsResolver,
+      MerberEditResolver,
+      PreventUnsavedChanges
    ],
    bootstrap: [
       AppComponent

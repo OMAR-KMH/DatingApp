@@ -1,3 +1,4 @@
+import { MemberEditComponent } from './member-list/member-edit/member-edit.component';
 import { MerberDetailsResolver } from './_reslover/merber-details-resolver';
 import { MemberDetailComponent } from './member-list/member-detail/member-detail.component';
 import { MemberListComponent } from './member-list/member-list.component';
@@ -7,6 +8,8 @@ import { ListsComponent } from './lists/lists.component';
 import { HomeComponent } from './home/home.component';
 import { Routes, CanActivate } from '@angular/router';
 import { MerberListsResolver } from './_reslover/merber-lists-resolver';
+import { MerberEditResolver } from './_reslover/merber-edit-resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 export const appRoutes: Routes = [
 
   { path: '', component: HomeComponent },
@@ -19,12 +22,17 @@ export const appRoutes: Routes = [
       { path: 'lists', component: ListsComponent },
       {
         path: 'members', component: MemberListComponent,
-        resolve: { 'users': MerberListsResolver }
+        resolve: { users: MerberListsResolver }
       },
       {
         path: 'members/:id', component: MemberDetailComponent,
-        resolve: { 'user': MerberDetailsResolver }
+        resolve: { user: MerberDetailsResolver }
       },
+      {
+        path: 'member/edit', component: MemberEditComponent,
+        resolve: { useredit: MerberEditResolver },canDeactivate:[PreventUnsavedChanges]
+      },
+
       { path: 'messages', component: MessagesComponent }
     ]
   },
