@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Models;
@@ -18,8 +19,10 @@ namespace DatingApp.API.Controllers {
     public class AuthController : ControllerBase {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthController (IAuthRepository repo, IConfiguration config) {
+        public AuthController (IAuthRepository repo, IConfiguration config, IMapper mapper) {
+           _mapper = mapper;
             _config = config;
             _repo = repo;
 
@@ -35,7 +38,7 @@ namespace DatingApp.API.Controllers {
             if (await _repo.UserExists (UserToRegisterDto.Username))
                 return BadRequest ("Username already exists ");
 
-            var userToCreat = new User{ Username = UserToRegisterDto.Username };
+            var userToCreat = new User { Username = UserToRegisterDto.Username };
 
             var createdUser = await _repo.Rigister (userToCreat, UserToRegisterDto.Password);
 
@@ -75,10 +78,12 @@ namespace DatingApp.API.Controllers {
             //create the token for the  client
             var tokenHandler = new JwtSecurityTokenHandler ();
             var token = tokenHandler.CreateToken (tokenDescriptor);
+            var user = _mapper.Map<UserForListDto>(userForRepo);
             return Ok (
                 new {
 
-                    token = tokenHandler.WriteToken (token)
+                    token = tokenHandler.WriteToken (token),
+                    user
                 }
 
             );

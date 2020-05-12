@@ -23,9 +23,18 @@ export class UsersService {
   }
 
 
-//update
+  //update
   updateUser(id: number, user: User) {
-   return this.http.put(this.apiUrl + 'users/' + id, user)
+    return this.http.put(this.apiUrl + 'users/' + id, user)
+  }
+
+  setMainPhoto(userId: number, id: number) {
+    // http://localhost:5000/api/users/245/photos/265/setMain
+    return this.http.post(this.apiUrl + 'users/' + userId + '/photos/' + id + '/setMain', {});
+
+  }
+  deletePhoto(userId: number, id: number) {
+   return this.http.delete(this.apiUrl + "users/" + userId + "/photos/" + id);
   }
 
 }

@@ -10,7 +10,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
-
+import {FileUploadModule} from 'ng2-file-upload'
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,6 +30,8 @@ import { ListsComponent } from './lists/lists.component';
 import { MemberEditComponent } from './member-list/member-edit/member-edit.component';
 import { MerberEditResolver } from './_reslover/merber-edit-resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { EditPhotoComponent } from './member-list/edit-photo/edit-photo.component';
+
 
 export function tokenGetter(){
 return localStorage.getItem('token');
@@ -46,7 +48,8 @@ return localStorage.getItem('token');
       MemberCardComponent,
       MemberDetailComponent,
       ListsComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      EditPhotoComponent
    ],
    imports: [
       BrowserModule,
@@ -57,6 +60,7 @@ return localStorage.getItem('token');
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
+      FileUploadModule,
       JwtModule.forRoot({
         config:{
           tokenGetter : tokenGetter,

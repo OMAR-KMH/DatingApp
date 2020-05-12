@@ -13,7 +13,7 @@
         <div class="col-sm-4">
             <div class="card">
                 <!-- <img calss="card-img-top img-thumbnail" src="" alt=""> -->
-                <img src="{{useredit.photoUrl}}" class="card-img-top img-thumbnail " alt="{{useredit.knownAs}}">
+                <img src="{{photoUrl}}" class="card-img-top img-thumbnail " alt="{{useredit.knownAs}}">
 
                 <div class="card-body">
                     <div>
@@ -66,8 +66,8 @@
                     </tab>
 
                     <tab heading="EditPhoto">
-                        <br>
-                        <p>Edit Photos is here</p>
+
+                        <app-edit-photo [photos]="useredit.photos" (getMemberPhotoChange)="updateMAinPhoto($event)"></app-edit-photo>
                     </tab>
                 </tabset>
             </div>

@@ -24,9 +24,12 @@
         </ul>
 
         <div *ngIf="LoggedIn()" dropdown class="dropdown text-light">
-            <a class="dropdown-toggle" dropdownToggle>
+            <span class="mr-1">
+            <img src="{{photoUrl}}" alt="">
+          </span>
+            <span class="dropdown-toggle" dropdownToggle>
         Welcome {{authService.tokenDecoded?.unique_name}}
-      </a>
+      </span>
             <div class="dropdown-menu" *dropdownMenu>
                 <a class="dropdown-item" [routerLink]="['member/edit']"> <i class="fa fa-user"></i> Edit Profile</a>
 

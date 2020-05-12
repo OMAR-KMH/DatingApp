@@ -1,8 +1,14 @@
-.navbar-light .navbar-nav .nav-link{
-color: white;
+.navbar-light .navbar-nav .nav-link {
+    color: white;
 }
 
-.dropdown-menu, .dropdown-toggle{
+.dropdown-menu,
+.dropdown-toggle {
+    cursor: pointer;
+}
 
-  cursor: pointer;
+img {
+    max-height: 50px;
+    border: 2px solid white;
+    display: inline;
 }
