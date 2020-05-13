@@ -5,6 +5,8 @@ import { AlertifyService } from './_services/alertify.service';
 import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {TimeAgoPipe} from 'time-ago-pipe';
+
 
 import { AuthService } from './_services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -50,7 +52,8 @@ return localStorage.getItem('token');
       MemberDetailComponent,
       ListsComponent,
       MemberEditComponent,
-      EditPhotoComponent
+      EditPhotoComponent,
+      TimeAgoPipe
    ],
    imports: [
       BrowserModule,

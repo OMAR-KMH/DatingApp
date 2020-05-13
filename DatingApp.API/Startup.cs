@@ -28,7 +28,6 @@ namespace DatingApp.API {
         public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -40,12 +39,13 @@ namespace DatingApp.API {
                 .AddJsonOptions (opt =>
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddAutoMapper();
-            services.AddCors();
-            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            services.AddAutoMapper ();
+            services.AddCors ();
+            services.Configure<CloudinarySettings> (Configuration.GetSection ("CloudinarySettings"));
             services.AddTransient<Seed> ();
             services.AddScoped<IAuthRepository, AuthRepository> ();
             services.AddScoped<IDatingRepository, DatingRepository> ();
+            services.AddScoped<LogUserActivaty> ();
             services.AddAuthentication (JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer (options => {
                     options.TokenValidationParameters = new TokenValidationParameters {
@@ -56,7 +56,6 @@ namespace DatingApp.API {
                     ValidateAudience = false
 
                     };
-
                 });
         }
 

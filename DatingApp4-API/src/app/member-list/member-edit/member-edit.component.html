@@ -26,11 +26,11 @@
                     </div>
                     <div>
                         <strong>LastActive: </strong>
-                        <p>{{useredit.lastActive}}</p>
+                        <p>{{useredit.lastActive | timeAgo}}</p>
                     </div>
                     <div>
                         <strong>Member since: </strong>
-                        <p>{{useredit.created}}</p>
+                        <p>{{useredit.created | date:'mediumDate'}}</p>
                     </div>
                 </div>
                 <div class="card-footer">

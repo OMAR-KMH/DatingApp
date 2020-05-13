@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Dtos;
+using DatingApp.API.Helpers;
 using DatingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.API.Controllers {
+
+     [ServiceFilter(typeof(LogUserActivaty))]
     [Authorize]
     [Route ("api/[Controller]")]
     public class UsersController : ControllerBase {
@@ -40,7 +43,6 @@ namespace DatingApp.API.Controllers {
         }
 
         [HttpPut ("{id}")]
-
         public async Task<IActionResult> UpdateUser (int id, [FromBody] UserForUpdate userForUpdate) {
 
             if (id != int.Parse (User.FindFirst (ClaimTypes.NameIdentifier).Value))
