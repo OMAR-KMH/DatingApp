@@ -22,27 +22,28 @@ namespace DatingApp.API.Controllers {
         private readonly IMapper _mapper;
 
         public AuthController (IAuthRepository repo, IConfiguration config, IMapper mapper) {
-           _mapper = mapper;
+            _mapper = mapper;
             _config = config;
             _repo = repo;
 
         }
 
         [HttpPost ("register")]
-        public async Task<IActionResult> Rigister (UserToRegisterDto UserToRegisterDto) {
+        public async Task<IActionResult> Rigister (UserToRegisterDto userToRegisterDto) {
 
             // if(!ModelState.IsValid)
             // return BadRequest(ModelState);
-            UserToRegisterDto.Username = UserToRegisterDto.Username.ToLower ();
+            userToRegisterDto.Username = userToRegisterDto.Username.ToLower ();
 
-            if (await _repo.UserExists (UserToRegisterDto.Username))
+            if (await _repo.UserExists (userToRegisterDto.Username))
                 return BadRequest ("Username already exists ");
 
-            var userToCreat = new User { Username = UserToRegisterDto.Username };
+            var userToCreat = _mapper.Map<User> (userToRegisterDto);
 
-            var createdUser = await _repo.Rigister (userToCreat, UserToRegisterDto.Password);
+            var createdUser = await _repo.Rigister (userToCreat, userToRegisterDto.Password);
+            var userToReturn = _mapper.Map<UserForDetailedDto> (createdUser);
 
-            return StatusCode (201);
+            return CreatedAtRoute ("GetUser", new { controller = "Users", id = createdUser.Id }, userToReturn);
 
         }
 
@@ -78,12 +79,12 @@ namespace DatingApp.API.Controllers {
             //create the token for the  client
             var tokenHandler = new JwtSecurityTokenHandler ();
             var token = tokenHandler.CreateToken (tokenDescriptor);
-            var user = _mapper.Map<UserForListDto>(userForRepo);
+            var user = _mapper.Map<UserForListDto> (userForRepo);
             return Ok (
                 new {
 
                     token = tokenHandler.WriteToken (token),
-                    user
+                        user
                 }
 
             );

@@ -17,10 +17,10 @@ export class AuthService {
   currentPhotoUrl = this.photoUrl.asObservable();
 
   constructor(private http: HttpClient, private alertify: AlertifyService) { }
-  currentUser: User;
-changeMemberPhoto(photoUrl :string){
-  this.photoUrl.next(photoUrl);
-}
+    currentUser: User;
+    changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+  }
 
   Login(model: any) {
 
@@ -41,9 +41,9 @@ changeMemberPhoto(photoUrl :string){
       );
   }
 
-  register(model: any) {
+  register(user: User) {
 
-    return this.http.post(this.baseUrl + 'register', model);
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
 

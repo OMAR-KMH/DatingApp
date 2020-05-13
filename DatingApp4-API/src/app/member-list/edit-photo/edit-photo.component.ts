@@ -57,8 +57,12 @@ export class EditPhotoComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
-        console.log(photo);
-        console.log(response);
+       if(res.isMain){
+        this.authService.changeMemberPhoto(photo.url);
+        // this.getMemberPhotoChange.emit(photo.url);
+        this.authService.currentUser.photoUrl = photo.url;
+        localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+       }
       }
     };
   }
