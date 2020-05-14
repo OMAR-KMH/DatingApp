@@ -10,13 +10,14 @@ import { of, Observable } from 'rxjs';
 
 export class MerberListsResolver implements Resolve<User[]>
 {
+  pageNumber = 1;
+  pageSize = 5;
   constructor(private usersService: UsersService, private alertify: AlertifyService
     , private router: Router) { }
 
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-
-    return this.usersService.getUsers().pipe(
+    return this.usersService.getUsers(this.pageNumber,this.pageSize).pipe(
       catchError(error => {
         this.alertify.error("Problem in Retrieving Data");
         this.router.navigate(['/home']);

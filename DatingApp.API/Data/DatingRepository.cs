@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using DatingApp.API.Helpers;
 using DatingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,18 +22,15 @@ namespace DatingApp.API.Data {
             _context.Remove (entity);
         }
 
-        public async Task<Photo> GetMainPhotoForUser(int userId)
-        {
-            return await _context.Photos.Where( p => p.UserId == userId).FirstOrDefaultAsync(u => u.IsMain);
+        public async Task<Photo> GetMainPhotoForUser (int userId) {
+            return await _context.Photos.Where (p => p.UserId == userId).FirstOrDefaultAsync (u => u.IsMain);
         }
 
-        public async Task<Photo> GetPhoto(int id)
-        {
-            var photo =await _context.Photos.FirstOrDefaultAsync(d => d.Id == id );
+        public async Task<Photo> GetPhoto (int id) {
+            var photo = await _context.Photos.FirstOrDefaultAsync (d => d.Id == id);
 
-        
             return photo;
-        
+
         }
 
         public async Task<User> GetUser (int id) {
@@ -39,10 +39,32 @@ namespace DatingApp.API.Data {
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetUsers () {
+        public async Task<PagedList<User>> GetUsers (UserParams userParams) {
 
-            var users = await _context.Users.Include (p => p.Photos).ToListAsync ();
-            return users;
+            var users = _context.Users.Include (p => p.Photos)
+                .OrderByDescending (u => u.LastActive).AsQueryable ();
+
+            users = users.Where (u => u.Id != userParams.userId);
+            users = users.Where (u => u.Gender == userParams.Gender);
+
+            if (userParams.MinAge != 18 || userParams.MaxAge != 99) {
+
+                var MinDob = DateTime.Today.AddYears (-userParams.MaxAge - 1);
+                var MaxDob = DateTime.Today.AddYears (-userParams.MinAge - 1);
+                users = users.Where (u => u.DateOfBirdth >= MinDob && u.DateOfBirdth <= MaxDob);
+            }
+
+            if (!string.IsNullOrEmpty (userParams.orderBy)) {
+                switch (userParams.orderBy) {
+                    case "created":
+                        users = users.OrderByDescending (u => u.Created);
+                        break;
+                    default:
+                        users = users.OrderByDescending (u => u.LastActive);
+                        break;
+                }
+            }
+            return await PagedList<User>.CreateAsync (users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<bool> SaveAll () {
@@ -50,6 +72,5 @@ namespace DatingApp.API.Data {
             return await _context.SaveChangesAsync () > 0;
         }
 
-        
     }
 }
