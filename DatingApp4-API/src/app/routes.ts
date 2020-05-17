@@ -1,3 +1,5 @@
+import { MessagesResolver } from './_reslover/messages-resolver';
+import {ListResolver } from './_reslover/list-resolver';
 import { MemberEditComponent } from './member-list/member-edit/member-edit.component';
 import { MerberDetailsResolver } from './_reslover/merber-details-resolver';
 import { MemberDetailComponent } from './member-list/member-detail/member-detail.component';
@@ -19,7 +21,9 @@ export const appRoutes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      { path: 'lists', component: ListsComponent },
+      { path: 'lists', component: ListsComponent ,
+      resolve : {users :ListResolver}
+    },
       {
         path: 'members', component: MemberListComponent,
         resolve: { users: MerberListsResolver }
@@ -33,7 +37,8 @@ export const appRoutes: Routes = [
         resolve: { useredit: MerberEditResolver },canDeactivate:[PreventUnsavedChanges]
       },
 
-      { path: 'messages', component: MessagesComponent }
+      { path: 'messages', component: MessagesComponent,
+      resolve: { messages: MessagesResolver} }
     ]
   },
 

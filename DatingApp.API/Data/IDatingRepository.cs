@@ -4,24 +4,30 @@ using System.Threading.Tasks;
 using DatingApp.API.Helpers;
 using DatingApp.API.Models;
 
-namespace DatingApp.API.Data
-{
-    public interface IDatingRepository
-    {
-         
-         void Add<T>(T entity) where T :class;
+namespace DatingApp.API.Data {
+    public interface IDatingRepository {
 
-         void Delete<T>(T entity) where T:class;
+        void Add<T> (T entity) where T : class;
 
-         Task<bool> SaveAll();
+        void Delete<T> (T entity) where T : class;
 
-         Task<User> GetUser(int id);
+        Task<bool> SaveAll ();
 
+        Task<User> GetUser (int id);
 
-         Task<PagedList<User>> GetUsers(UserParams userParams);  
+        Task<PagedList<User>> GetUsers (UserParams userParams);
 
-          Task<Photo> GetPhoto(int id);
+        Task<Photo> GetPhoto (int id);
 
-          Task<Photo> GetMainPhotoForUser(int userId);
+        Task<Photo> GetMainPhotoForUser (int userId);
+
+        Task<Like> GetLike (int userId, int reciptionId);
+
+        Task<Message> GetMessage (int id);
+
+        Task<PagedList<Message>> GetMessagesForUser (MessageParams messageParams);
+
+        Task<IEnumerable<Message>> GetMessageThread (int userId, int recipientId);
+
     }
 }

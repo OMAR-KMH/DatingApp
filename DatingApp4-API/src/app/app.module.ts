@@ -1,3 +1,5 @@
+import { MessagesResolver } from './_reslover/messages-resolver';
+import { ListResolver } from './_reslover/list-resolver';
 import { MemberDetailComponent } from './member-list/member-detail/member-detail.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { RouterModule } from '@angular/router';
@@ -34,6 +36,7 @@ import { MemberEditComponent } from './member-list/member-edit/member-edit.compo
 import { MerberEditResolver } from './_reslover/merber-edit-resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { EditPhotoComponent } from './member-list/edit-photo/edit-photo.component';
+import { MemberMessageComponent } from './member-list/member-message/member-message.component';
 
 
 export function tokenGetter(){
@@ -50,6 +53,7 @@ return localStorage.getItem('token');
       MemberListComponent,
       MemberCardComponent,
       MemberDetailComponent,
+      MemberMessageComponent,
       ListsComponent,
       MemberEditComponent,
       EditPhotoComponent,
@@ -87,7 +91,9 @@ return localStorage.getItem('token');
       MerberDetailsResolver,
       MerberListsResolver,
       MerberEditResolver,
-      PreventUnsavedChanges
+      PreventUnsavedChanges,
+      ListResolver,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent
